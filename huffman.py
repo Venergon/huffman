@@ -4,14 +4,14 @@ class Node:
         self.val = value
         self.probability = probability
 
+    def __str__(self):
+        return "({})".format(self.val)
+
     def get_prob(self):
         return self.probability
 
     def get_val(self):
         return self.val
-
-    def __str__(self):
-        return "({})".format(self.val)
 
     def set_code(self, code):
         self.code = code
@@ -25,11 +25,14 @@ class NodeJoin:
         self.node2 = node2
         self.probability = node1.get_prob() + node2.get_prob()
 
+    def __str__(self):
+        return "({},{})".format(self.node1, self.node2)
+
     def get_prob(self):
         return self.probability
 
-    def __str__(self):
-        return "({},{})".format(self.node1, self.node2)
+    def get_val(self):
+        return self.node1.get_val()+self.node2.get_val()
 
     def set_code(self, code):
         self.code = code
@@ -62,6 +65,13 @@ while n:
     nodes.append(Node(value, probability))
     n = input("Enter node: ")
 
+if sorted(nodes, key=lambda x: x.get_prob(), reverse=True) != nodes:
+    print("Nodes not sorted! Sorting...")
+    nodes.sort(key=lambda x: x.get_prob(), reverse=True)
+    print("New nodes:")
+    for node in nodes:
+        print("  "+str(node))
+
 while len(nodes) > 1:
     new_nodes = nodes[:-2]
     new_node = NodeJoin(nodes[-1], nodes[-2])
@@ -72,7 +82,8 @@ while len(nodes) > 1:
     else:
         new_nodes.append(new_node)
     nodes = new_nodes
-    
+
+assert(len(nodes) == 1)
 node = nodes[0]
 node.set_code("")
 if type(node) is Node:
