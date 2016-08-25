@@ -1,3 +1,4 @@
+#!/usr/local/bin/python3
 final_codes = []
 class Node:
     def __init__(self, value, probability):
