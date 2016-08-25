@@ -60,6 +60,10 @@ def split_nodes(node):
 nodes = []
 
 n = input("Enter node: ")
+if "," not in n:
+    print("No first node, maybe you were trying to set a radix? (This version only works with radix two)")
+    n = input("Enter node: ")
+
 while n:
     value, probability = n.split(",")
     probability = float(probability)
